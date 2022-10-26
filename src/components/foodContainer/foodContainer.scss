@@ -1,0 +1,9 @@
+.food {
+    margin: 0 auto;
+    max-width: 1360px;
+    &__block-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        column-gap: 10px;
+    }
+}

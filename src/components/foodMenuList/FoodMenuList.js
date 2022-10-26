@@ -1,27 +1,17 @@
-import './foodList.scss';
+import './foodMenuList.scss';
 
-const FoodList = ({ data, isEdit }) => {
-	const menuListClassName = isEdit ? "menu__list_container edit" : "menu__list_container";
+const FoodMenuList = ({data}) => {
+const {id, food, quantity, protein} = data;
 
-	const changeMenuList = () => {
-		console.log('change menu list');
-	}
+return (
+	<div className="menu__list_container">
+		<ul data-id={id} className="items-list">
+			<li className="item"><span>{food}</span></li>
+			<li className="item"><span>{quantity}</span></li>
+			<li className="item"><span>{protein}</span></li>
+		</ul>
+	</div>
+)
+}
 
-	return (
-		<div className={menuListClassName}>
-			{data.map((item, i) => {
-				const {food, quantity, protein} = item;
-
-				return (
-					<ul key={i} className="items-list">
-						<li className="item">{isEdit ? <input onChange={changeMenuList} type="text" value={food}/> : <span>{food}</span>}</li>
-						<li className="item">{isEdit ? <input onChange={changeMenuList} type="text" value={quantity}/> : <span>{quantity}</span>}</li>
-						<li className="item">{isEdit ? <input onChange={changeMenuList} type="text" value={protein}/> : <span>{protein}</span>}</li>
-					</ul>
-				)
-			})}
-		</div>
-	)
-};
-
-export default FoodList;
+export default FoodMenuList;
