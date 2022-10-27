@@ -34,7 +34,7 @@ class App extends Component{
 
         const foodContainer = foodDataArr.map((item) => {
             return (
-                <FoodContainer key={uuidv4()} data={item}/>
+                <FoodContainer key={uuidv4()} data={item} date={item[0]}/>
             )
         })
 

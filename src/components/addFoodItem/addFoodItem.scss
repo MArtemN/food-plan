@@ -1,0 +1,60 @@
+.modal {
+    &__overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, .4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: .3s;
+        &.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+    }
+    &__content {
+        width: 20%;
+        background-color: #fff;
+        border-radius: 12px;
+        transition: .3s;
+        transform: scale(0);
+        &_active {
+            transform: scale(1);
+        }
+        .form-title {
+            border: none;
+        }
+        .addForm {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+            align-items: center;
+            label {
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+            input {
+                margin-bottom: 10px;
+                padding: 5px 10px;
+                border: 1px solid black;
+                border-radius: 12px;
+                max-width: 50%;
+            }
+            .add-button {
+                border: none;
+                border-radius: 12px;
+                width: 50%;
+                background-color: #3d5a80;
+                color: #fff;
+                padding: 10px;
+                margin-top: 10px;
+                cursor: pointer;
+            }
+        }
+    }
+}

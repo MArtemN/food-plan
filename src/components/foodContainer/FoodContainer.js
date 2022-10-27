@@ -11,23 +11,37 @@ class FoodContainer extends Component {
 
 		this.state = {
 			data: this.props.data,
+			date: this.props.date,
 		}
 	}
 
 	onDelete = (numberOfMeal) => {
 		if (window.confirm('Вы уверены, что хотите удалить прием пищи?')) {
-			let newData = Object.assign(this.state.data, []),
-				idArray = [];
-
-			idArray = newData[1][numberOfMeal].map(item => {
-				return item.id;
-			});
+			let newData = Object.assign(this.state.data, []);
 
 			delete newData[1][numberOfMeal];
 
-			this.setState(({data}) => ({
+			this.setState(() => ({
 				data: newData
 			}));
+		}
+	}
+
+	addNewFoodItem = (modifiedData) => {
+		const {numberOfMeals, food, quantity, protein} = modifiedData;
+
+		if (food && quantity && protein) {
+			let newData = Object.assign(this.state.data[1], []);
+			if (this.state.data[1][numberOfMeals]) {
+				newData[numberOfMeals].push(modifiedData);
+			} else {
+				newData[numberOfMeals] = [];
+				newData[numberOfMeals].push(modifiedData);
+			}
+
+			this.setState(({data}) => ({
+				[data[1]]: newData
+			}))
 		}
 	}
 
@@ -41,7 +55,9 @@ class FoodContainer extends Component {
 					key={uuidv4()}
 					numberOfMeal={index + 1}
 					mealItems={item[1]}
-					onDelete={() => this.onDelete(item[0])}/>
+					onDelete={() => this.onDelete(item[0])}
+					date={this.state.date}
+					addNewFoodItem={this.addNewFoodItem}/>
 			)
 		});
 

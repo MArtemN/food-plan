@@ -20,10 +20,14 @@ class BtnBlock extends Component  {
 		this.props.onDelete();
 	}
 
+	onAddFoodItem = () => {
+		this.props.changeAddFoodModalActive(true);
+	}
+
 	render() {
 		return (
 			<div className="btn-cont">
-				<button className="add">Добавить</button>
+				<button onClick={this.onAddFoodItem} className="add">Добавить</button>
 				<button
 					onClick={this.onEditMode}
 					className="edit">{this.state.editMode ? 'Сохранить' : 'Редактировать'}</button>

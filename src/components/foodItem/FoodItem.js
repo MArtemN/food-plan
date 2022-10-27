@@ -4,7 +4,8 @@ import WaterBlock from '../waterBlock/WaterBlock';
 import Calculator from '../calculator/Calculator';
 import BtnBlock from '../btnBlock/BtnBlock';
 import FoodMenuListEditMode from '../foodMenuListEditMode/FoodMenuListEditMode';
-import FoodService from '../../services/FoodService';
+// import FoodService from '../../services/FoodService';
+import AddFoodItem from '../addFoodItem/AddFoodItem';
 import { v4 as uuidv4 } from 'uuid';
 
 import './foodItem.scss';
@@ -17,6 +18,8 @@ class FoodItem extends Component {
 			numberOfMeal: this.props.numberOfMeal,
 			mealItems: this.props.mealItems,
 			editMode: false,
+			addFoodItemModalActive: false,
+			date: this.props.date,
 		}
 	}
 
@@ -24,35 +27,40 @@ class FoodItem extends Component {
 		this.setState(({editMode: !this.state.editMode}));
 	}
 
-	saveChanges = () => {
-		// const foodService = new FoodService(),
-		// 	sendData = JSON.stringify(this.state.mealItems);
-		//
-		// foodService
-		// 	.postData('saveChanges.php', sendData)
-		// 	.then((res) => {
-		// 		console.log(res)
-		// 	});
+	changeAddFoodModalActive = (active) => {
+		this.setState(({addFoodItemModalActive: active}))
 	}
 
 	render() {
-		const {numberOfMeal, mealItems, editMode} = this.state;
-		let editModeClassName = editMode ? ' editMode' : '';
+		const {date, numberOfMeal, mealItems, editMode, addFoodItemModalActive} = this.state;
+		let editModeClassName = editMode ? ' editMode' : '',
+			water = {
+				date: '',
+				numberOfMeals: '',
+			};
+
 
 		const mealItem = mealItems.map((item) => {
-			if (editMode) {
-				return (
-					<FoodMenuListEditMode
-						key={uuidv4()}
-						data={item}/>
-				)
+			const {food} = item;
+			if (food !== 'Вода') {
+				water.date = item.date;
+				water.numberOfMeals = item.numberOfMeals;
+				if (editMode) {
+					return (
+						<FoodMenuListEditMode
+							key={uuidv4()}
+							data={item}/>
+					)
+				} else {
+					return (
+						<FoodMenuList
+							key={uuidv4()}
+							data={item}
+							editMode={editMode}/>
+					)
+				}
 			} else {
-				return (
-					<FoodMenuList
-						key={uuidv4()}
-						data={item}
-						editMode={editMode}/>
-				)
+				water = item;
 			}
 		});
 
@@ -71,15 +79,23 @@ class FoodItem extends Component {
 					</div>
 					<div className="menu__footer">
 						<div className="result">
-							<WaterBlock isEdit={this.state.editMode}/>
-							<Calculator/>
+							<WaterBlock
+								data={water}
+								editMode={editMode}/>
+							<Calculator data={mealItems}/>
 						</div>
 						<BtnBlock
 							changeEditMode={this.changeEditMode}
-							saveChanges={this.saveChanges}
-							onDelete={this.props.onDelete}/>
+							onDelete={this.props.onDelete}
+							changeAddFoodModalActive={this.changeAddFoodModalActive}/>
 					</div>
 				</div>
+				<AddFoodItem
+					active={addFoodItemModalActive}
+					changeAddFoodModalActive={this.changeAddFoodModalActive}
+					numberOfMeals={numberOfMeal}
+					date={date}
+					addNewFoodItem={this.props.addNewFoodItem}/>
 			</div>
 		)
 	}

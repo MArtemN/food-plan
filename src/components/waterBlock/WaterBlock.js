@@ -1,26 +1,37 @@
 import { Component } from 'react';
 
+import './waterBlock.scss';
+
 class WaterBlock extends Component {
+
 	constructor (props) {
 		super(props)
+
 		this.state = {
-			water: '',
+			water: this.props.data,
 		}
 	}
 
 	onChange = (e) => {
-		this.setState(({water: e.target.value}));
+		let newData = Object.assign(this.state.water, []);
+		newData.quantity = e.target.value;
+
+		this.setState(() => ({
+			water: newData
+		}));
 	}
 
 	render() {
+		const {quantity} = this.state.water;
+
 		return (
-			<div className="water">Вода: {this.props.isEdit ?
+			<div className="water">Вода: {this.props.editMode ?
 				<input
 					type="number"
 					min="0"
-					value={this.state.water}
+					value={quantity ? quantity : ''}
 					onChange={this.onChange}/> :
-				<span>{this.state.water === '' ? 0 : this.state.water}</span>}
+				<span>{quantity ? quantity : '0'}</span>}
 			</div>
 		)
 	}
