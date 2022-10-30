@@ -5,6 +5,9 @@
 body {
   background-color: #E3E3E5;
   margin-bottom: 100px;
+  &.hidden {
+    overflow: hidden;
+  }
 }
 
 .App {
@@ -21,14 +24,38 @@ body {
   }
 }
 
+input {
+  margin-top: 5px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #E3E3E5;
+  &:focus {
+    border: 1px solid #97d6eb;
+    outline: none;
+  }
+}
+
 @keyframes pulse {
   0% {
     transform: scaleX(1);
   }
   50% {
-    transform: scale3d(1.05, 1.05, 1.05)
+    transform: scale3d(1.20, 1.20, 1.20)
   }
   to {
     transform: scaleX(1);
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
   }
 }

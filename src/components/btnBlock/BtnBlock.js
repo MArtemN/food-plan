@@ -5,32 +5,35 @@ import './btnBlock.scss';
 class BtnBlock extends Component  {
 	constructor(props) {
 		super(props)
-
 		this.state = {
 			editMode: false,
 		}
 	}
 
-	onEditMode = () => {
-		this.setState(({editMode: !this.state.editMode}));
-		this.props.changeEditMode();
-	}
-
 	onDelete = () => {
-		this.props.onDelete();
+		const {deleteMealItem, menuListItems, date, numberOfMeal} = this.props;
+		deleteMealItem(menuListItems, date, numberOfMeal);
 	}
 
-	onAddFoodItem = () => {
-		this.props.changeAddFoodModalActive(true);
+	onAddNewFood = () => {
+		this.props.onChangeModalActive();
+	}
+
+	onEdit = () => {
+		if (this.state.editMode) {
+			this.props.saveChangesMenu(this.props.menuListItems);
+		}
+		this.setState({editMode: !this.state.editMode});
+		this.props.onEditMode();
 	}
 
 	render() {
+		const {editMode} = this.state;
+
 		return (
-			<div className="btn-cont">
-				<button onClick={this.onAddFoodItem} className="add">Добавить</button>
-				<button
-					onClick={this.onEditMode}
-					className="edit">{this.state.editMode ? 'Сохранить' : 'Редактировать'}</button>
+			<div className="btn-container">
+				<button onClick={this.onAddNewFood} className="add">Добавить</button>
+				<button onClick={this.onEdit} className="edit">{editMode ? 'Сохранить' : 'Редактировать'}</button>
 				<button onClick={this.onDelete} className="remove">Удалить</button>
 			</div>
 		)

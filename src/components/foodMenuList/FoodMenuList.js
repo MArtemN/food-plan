@@ -1,17 +1,27 @@
 import './foodMenuList.scss';
 
 const FoodMenuList = ({data}) => {
-const {id, food, quantity, protein} = data;
+	const menuList = data.map(item => {
+		if (item.food !== 'Вода') {
+			return (
+				<ul key={item.id} className="menu-list__item">
+					<li className="item">
+						<span>{item.food}</span>
+					</li>
+					<li className="item">
+						<span>{item.quantity}</span>
+					</li>
+					<li className="item">
+						<span>{item.protein}</span>
+					</li>
+				</ul>
+			)
+		}
+	});
 
-return (
-	<div className="menu__list_container">
-		<ul data-id={id} className="items-list">
-			<li className="item"><span>{food}</span></li>
-			<li className="item"><span>{quantity}</span></li>
-			<li className="item"><span>{protein}</span></li>
-		</ul>
-	</div>
-)
+	return <>
+		{menuList}
+	</>
 }
 
 export default FoodMenuList;

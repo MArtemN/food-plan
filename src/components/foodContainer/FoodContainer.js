@@ -1,77 +1,33 @@
-import { Component } from 'react';
 import DateHeader from '../dateHeader/DateHeader';
-import FoodItem from '../foodItem/FoodItem';
+import MealItem from '../mealItem/MealItem';
 import { v4 as uuidv4 } from 'uuid';
 
 import './foodContainer.scss';
 
-class FoodContainer extends Component {
-	constructor (props) {
-		super(props)
+const FoodContainer = ({data, date, addNewFood, deleteMealItem, saveChangesMenu}) => {
+	const foodDataArr = Object.entries(data[1]);
 
-		this.state = {
-			data: this.props.data,
-			date: this.props.date,
-		}
-	}
-
-	onDelete = (numberOfMeal) => {
-		if (window.confirm('Вы уверены, что хотите удалить прием пищи?')) {
-			let newData = Object.assign(this.state.data, []);
-
-			delete newData[1][numberOfMeal];
-
-			this.setState(() => ({
-				data: newData
-			}));
-		}
-	}
-
-	addNewFoodItem = (modifiedData) => {
-		const {numberOfMeals, food, quantity, protein} = modifiedData;
-
-		if (food && quantity && protein) {
-			let newData = Object.assign(this.state.data[1], []);
-			if (this.state.data[1][numberOfMeals]) {
-				newData[numberOfMeals].push(modifiedData);
-			} else {
-				newData[numberOfMeals] = [];
-				newData[numberOfMeals].push(modifiedData);
-			}
-
-			this.setState(({data}) => ({
-				[data[1]]: newData
-			}))
-		}
-	}
-
-	render() {
-		const foodDate = this.state.data[0],
-			foodDataArr = Object.entries(this.state.data[1]);
-
-		const foodItem = foodDataArr.map((item, index) => {
-			return (
-				<FoodItem
-					key={uuidv4()}
-					numberOfMeal={index + 1}
-					mealItems={item[1]}
-					onDelete={() => this.onDelete(item[0])}
-					date={this.state.date}
-					addNewFoodItem={this.addNewFoodItem}/>
-			)
-		});
-
+	const mealItem = foodDataArr.map((item) => {
 		return (
-			<div className="food">
-				<DateHeader date={foodDate}/>
-				<div className="food__menu">
-					<div className="food__block-list">
-						{foodItem}
-					</div>
-				</div>
-			</div>
+			<MealItem
+				key={uuidv4()}
+				numberOfMeal={item[0]}
+				menuListItems={item[1]}
+				addNewFood={addNewFood}
+				deleteMealItem={deleteMealItem}
+				saveChangesMenu={saveChangesMenu}
+				date={date}/>
 		)
-	}
+	});
+
+	return (
+		<div className="food food__container">
+			<DateHeader date={date}/>
+			<div className="food__menu-container">
+				{mealItem}
+			</div>
+		</div>
+	)
 }
 
 export default FoodContainer;

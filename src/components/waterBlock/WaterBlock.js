@@ -1,40 +1,30 @@
-import { Component } from 'react';
-
 import './waterBlock.scss';
 
-class WaterBlock extends Component {
-
-	constructor (props) {
-		super(props)
-
-		this.state = {
-			water: this.props.data,
-		}
+const WaterBlock = ({data, editMode, onChangeMenuList}) => {
+	const onChange = (e, id) => {
+		onChangeMenuList(e, id);
 	}
 
-	onChange = (e) => {
-		let newData = Object.assign(this.state.water, []);
-		newData.quantity = e.target.value;
-
-		this.setState(() => ({
-			water: newData
-		}));
-	}
-
-	render() {
-		const {quantity} = this.state.water;
-
-		return (
-			<div className="water">Вода: {this.props.editMode ?
+	const water = data.map(item => {
+		if (editMode) {
+			return (
 				<input
-					type="number"
-					min="0"
-					value={quantity ? quantity : ''}
-					onChange={this.onChange}/> :
-				<span>{quantity ? quantity : '0'}</span>}
-			</div>
+					key={item.id}
+					type="text"
+					name="quantity"
+					value={item.quantity}
+					onChange={(e) => onChange(e, item.id)}/>
+			)
+		}
+		return (
+			<span key={item.id}>{item.quantity ? ' ' + item.quantity : ' 0'}</span>
 		)
-	}
+	});
+	return (
+		<div className="water">Вода:
+			{water}
+		</div>
+	)
 }
 
 export default WaterBlock;

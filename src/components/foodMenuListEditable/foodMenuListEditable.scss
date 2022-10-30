@@ -10,4 +10,11 @@
             background-color: #fff;
         }
     }
+    &.editMode {
+        .item {
+            input {
+                width: 90%;
+            }
+        }
+    }
 }

@@ -1,0 +1,39 @@
+.add-plus-btn {
+    position: relative;
+    margin: 30px auto;
+    width: 100px;
+    height: 100px;
+    border: 5px solid #3D5A80;
+    border-radius: 100%;
+    box-shadow: -1px 0px 8px 10px rgba(34, 60, 80, 0.2);
+    animation: 1.5s pulse linear infinite;
+    transition: .3s all;
+    &:before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 3px;
+        height: 25px;
+        background: linear-gradient(45deg, #3D5A80, forestgreen);
+        background-size: 200% 200%;
+        transform: translate(-50%, -50%);
+        animation: 2s gradient ease infinite;
+    }
+    &:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 25px;
+        height: 3px;
+        background: linear-gradient(45deg, #3D5A80, forestgreen);
+        background-size: 200% 200%;
+        transform: translate(-50%, -50%);
+        animation: 2s gradient ease infinite;
+    }
+    &:hover {
+        cursor: pointer;
+        transform: scale(1.2);
+    }
+}

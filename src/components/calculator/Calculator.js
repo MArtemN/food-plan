@@ -1,15 +1,6 @@
 const Calculator = ({data}) => {
-	let proteinArr,
-		result;
-
-	proteinArr = data.map(item => {
-		const {protein} = item;
-
-		return +(protein);
-	});
-
-	result = proteinArr.reduce((sum, elem) => {
-		return sum + elem;
+	const result = data.reduce((sum, current) => {
+		return sum + +(current.protein);
 	}, 0);
 
 	return (
